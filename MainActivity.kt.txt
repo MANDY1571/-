@@ -1,0 +1,34 @@
+package com.example.myapp
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapp.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnCalculate.setOnClickListener {
+            val value1 = binding.etValue1.text.toString()
+            val value2 = binding.etValue2.text.toString()
+
+            if (value1.isNotEmpty() && value2.isNotEmpty()) {
+                val number1 = value1.toInt()
+                val number2 = value2.toInt()
+                val result = number1 + number2
+
+                val intent = Intent(this, ResultActivity::class.java)
+                intent.putExtra("result", result)
+                startActivity(intent)
+            } else {
+                binding.tvError.text = "Введите оба значения"
+            }
+        }
+    }
+}
